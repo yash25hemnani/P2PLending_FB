@@ -1,0 +1,44 @@
+const express = require('express')
+const app = express();
+
+const dotenv = require('dotenv')
+dotenv.config()
+
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+const cors = require('cors');
+app.use(
+    cors({
+        origin: "http://localhost:5173", 
+        credentials: true,  
+    })
+);
+
+const morgan = require('morgan')
+const userRouter = require('./routes/user.routes')
+const groupRouter = require('./routes/group.routes')
+const bookRouter = require('./routes/book.routes')
+
+const connectToDB = require('./config/db')
+connectToDB()
+
+app.use('/uploads', express.static('uploads'));
+
+app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+
+
+
+app.get('/', (req, res) => {
+    res.send("Hello world")
+})
+
+app.use('/user', userRouter)
+app.use('/group', groupRouter)
+app.use('/book', bookRouter)
+
+const port = process.env.PORT || 3000
+
+app.listen(port, () => console.log('Server running on port 3000'));

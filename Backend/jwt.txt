@@ -1,0 +1,150 @@
+o use JWT (JSON Web Token) for authentication in your signup route, follow these steps:
+
+1️⃣ Install jsonwebtoken package
+Run the following command in your backend project:
+
+bash
+Copy
+Edit
+npm install jsonwebtoken
+2️⃣ Update Your Signup Route
+Modify your signup route to generate a JWT token after successful user creation.
+
+Updated Code:
+javascript
+Copy
+Edit
+const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const userModel = require('../models/userModel');
+
+const router = express.Router();
+const JWT_SECRET = 'your_secret_key_here'; // Use a strong secret key (store it in env variables)
+
+router.post('/signup', async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        // Check if user already exists
+        const existingUser = await userModel.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists" });
+        }
+
+        // Ensure password is provided
+        if (!password) {
+            return res.status(400).json({ message: "Password is required" });
+        }
+
+        // Hash password with salt rounds
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user
+        const newUser = await userModel.create({
+            email,
+            username,
+            password: hashedPassword, // Store hashed password
+        });
+
+        // Generate JWT token
+        const token = jwt.sign({ userId: newUser._id, email: newUser.email }, JWT_SECRET, {
+            expiresIn: "1h", // Token expires in 1 hour
+        });
+
+        res.status(201).json({ message: "User created successfully", token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+module.exports = router;
+3️⃣ Verify JWT Token (Middleware)
+Create middleware to protect routes that require authentication.
+
+middleware/authMiddleware.js
+javascript
+Copy
+Edit
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = 'your_secret_key_here';
+
+const authMiddleware = (req, res, next) => {
+    const token = req.header("Authorization");
+
+    if (!token) {
+        return res.status(401).json({ message: "Access Denied. No token provided." });
+    }
+
+    try {
+        const verified = jwt.verify(token, JWT_SECRET);
+        req.user = verified; // Add user details to request object
+        next();
+    } catch (error) {
+        res.status(400).json({ message: "Invalid token" });
+    }
+};
+
+module.exports = authMiddleware;
+4️⃣ Protect Routes
+Now, apply this middleware to routes that require authentication.
+
+Example: Protected Route
+javascript
+Copy
+Edit
+router.get('/dashboard', authMiddleware, (req, res) => {
+    res.json({ message: "Welcome to your dashboard", user: req.user });
+});
+5️⃣ Login Route (For Token Generation)
+After signup, users can log in to get a JWT.
+
+routes/auth.js
+javascript
+Copy
+Edit
+router.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: "Invalid credentials" });
+        }
+
+        const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, {
+            expiresIn: "1h",
+        });
+
+        res.json({ message: "Login successful", token });
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+How JWT Works in Your Signup/Login System
+✅ User signs up → Token is generated and sent in response.
+✅ User logs in → If email/password is correct, a new token is sent.
+✅ User accesses protected routes → The token is verified before granting access.
+
+Client-side Usage (React)
+Store the token in localStorage or httpOnly cookies:
+
+javascript
+Copy
+Edit
+localStorage.setItem("token", response.data.token);
+And include it in Axios requests:
+
+javascript
+Copy
+Edit
+axios.get('/dashboard', {
+    headers: { Authorization: localStorage.getItem("token") }
+});
+🔹 Now your authentication system is secure with JWT! 🚀
