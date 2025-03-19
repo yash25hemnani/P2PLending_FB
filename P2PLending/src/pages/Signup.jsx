@@ -108,7 +108,7 @@ function Signup() {
         const randomOTP = Math.floor(100000 + Math.random() * 900000);
         setOTP(randomOTP)
         console.log(randomOTP)
-
+        console.log(formData.email)
         emailjs
         .send(
             import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,

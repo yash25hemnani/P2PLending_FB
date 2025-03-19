@@ -29,6 +29,7 @@ function Login() {
             } catch (error) {
                 console.error("Auth check failed:", error);
             } finally {
+                
             }
         };
 

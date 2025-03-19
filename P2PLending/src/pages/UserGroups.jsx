@@ -438,6 +438,16 @@ function UserGroups() {
                             </button>
                         </div>
                     </div>
+                    {currentGroup?.createdBy?.email === userData?.email && (<label className='flex flex-col'>
+                        Group Code
+                        <input class=
+                        "bg-white border-black border-2 p-2.5 focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] rounded-md"
+                        placeholder="Group Name"
+                        name='groupName'
+                        value={currentGroup.groupCode}
+                        readOnly={true}
+                        />
+                    </label>)}
                     <label className='flex flex-col'>
                         Group Name
                         <input class=
