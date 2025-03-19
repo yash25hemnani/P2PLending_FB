@@ -101,6 +101,17 @@ function Requests() {
                 if(response.data.status == 'passed'){
                     // Since we are resetting the requests array to empty, we can remove all the elements with the same book id
                     setReceivedRequests((prevRequests) => prevRequests.filter((book) => book._id !== bookId))
+                    try {
+                        response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/notification/create`, {
+                            forUser: userEmail, 
+                            message: `Your request for the book ${currentBook.bookName} was approved by - ${userData.email}`, 
+                            fromUser: userData.email
+                        }, {withCredentials: true})
+
+                        console.log(response)
+                    } catch (error) {
+                        console.log(error)
+                    }
                 }
             }
         
