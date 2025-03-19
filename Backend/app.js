@@ -10,7 +10,7 @@ app.use(cookieParser());
 const cors = require('cors');
 app.use(
   cors({
-    origin: "https://your-frontend-domain.onrender.com", 
+    origin: "https://p2p-lending-backend.onrender.com", 
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, 
