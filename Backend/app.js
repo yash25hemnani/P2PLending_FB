@@ -9,10 +9,12 @@ app.use(cookieParser());
 
 const cors = require('cors');
 app.use(
-    cors({
-        origin: "http://localhost:5173", 
-        credentials: true,  
-    })
+  cors({
+    origin: "https://your-frontend-domain.onrender.com", 
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, 
+  })
 );
 
 const morgan = require('morgan')
