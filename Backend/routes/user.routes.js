@@ -91,11 +91,13 @@ router.post('/signup', async (req, res) => {
         });
 
         res.cookie("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",  // Only secure in production
-            sameSite: "lax",  // Helps with cross-site requests
-            maxAge: 24 * 60 * 60 * 1000
+          httpOnly: true,  
+          secure: process.env.NODE_ENV === "production",  
+          sameSite: "none",  
+          maxAge: 24 * 60 * 60 * 1000, 
+          domain: "p2p-lending-frontend.onrender.com",  
         });
+
 
         res.status(201).json({
             status: 'passed',
@@ -206,12 +208,14 @@ router.post('/login', async (req, res) => {
             expiresIn: "24h",
         });
 
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",  // Only secure in production
-            sameSite: "lax",  // Helps with cross-site requests
-            maxAge: 24 * 60 * 60 * 1000
+         res.cookie("token", token, {
+          httpOnly: true,  
+          secure: process.env.NODE_ENV === "production",  
+          sameSite: "none",  
+          maxAge: 24 * 60 * 60 * 1000, 
+          domain: "p2p-lending-frontend.onrender.com",  
         });
+
 
         console.log(token)
 
