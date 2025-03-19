@@ -94,7 +94,7 @@ router.post('/signup', async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", 
             sameSite: "none", 
-            maxAge: 24 * 60 * 60 * 1000, /
+            maxAge: 24 * 60 * 60 * 1000, 
             path: "/",
         });
 
@@ -213,7 +213,7 @@ router.post('/login', async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", 
             sameSite: "none", 
-            maxAge: 24 * 60 * 60 * 1000, /
+            maxAge: 24 * 60 * 60 * 1000, 
             path: "/",
         });
 
@@ -275,7 +275,7 @@ router.post("/logout", (req, res) => {
     res.clearCookie("token", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",  // Secure only in production
-        sameSite: "lax" // Helps with cross-origin cookies
+        sameSite: "none" // Helps with cross-origin cookies
     });
 
     return res.json({ 
