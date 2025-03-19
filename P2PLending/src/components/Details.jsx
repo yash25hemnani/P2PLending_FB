@@ -43,7 +43,7 @@ function Details({currentGroupId, lendersList, setLendersList, currentUser, setC
 
   const loadBooks = async () => {
     try {
-      let response = await axios.post("http://localhost:3000/book/fetch/all/viewing", 
+      let response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/fetch/all/viewing`, 
           {bookOwner: emailToLoad},
           { withCredentials: true });
       
@@ -86,7 +86,7 @@ function Details({currentGroupId, lendersList, setLendersList, currentUser, setC
     useEffect(() => {
       const fetchLenders = async () => {
         try {
-          const response = await axios.post("http://localhost:3000/group/fetch/one", {
+          const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/fetch/one`, {
               groupId: currentGroupId
           }, {withCredentials: true})
   

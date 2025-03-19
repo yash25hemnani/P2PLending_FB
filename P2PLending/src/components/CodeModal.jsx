@@ -18,7 +18,7 @@ function CodeModal({currentGroup, setIsCodeModalVisible, setJoinedGroups, notJoi
         console.log(currentGroup.groupId)
         try {
             setIsLoading(true)
-            const response = await axios.post("http://localhost:3000/group/join", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/join`, {
                 groupId: currentGroup.groupId,
                 groupCode: groupCode,
             }, { withCredentials: true });

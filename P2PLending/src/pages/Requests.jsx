@@ -16,7 +16,7 @@ function Requests() {
     useEffect(() => {
       const getReceivedRequests = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/book/request/received', {withCredentials: true})
+            const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/book/request/received`, {withCredentials: true})
 
             if(response.data.status === 'passed'){
                 console.log(response.data.data)
@@ -33,7 +33,7 @@ function Requests() {
     useEffect(() => {
       const getSentRequests = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/book/request/sent', {withCredentials: true})
+            const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/book/request/sent`, {withCredentials: true})
 
             if(response.data.status === 'passed'){
                 console.log(response.data.data)
@@ -50,7 +50,7 @@ function Requests() {
     const deleteRequest = async (listName, bookId, userEmail) => {
         const toSendEmail = listName === "received" ?  userEmail : userData.email
         try {
-            const response =  await axios.post('http://localhost:3000/book/request/remove',
+            const response =  await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/request/remove`,
              {bookId, userEmail: toSendEmail},
              {withCredentials:true})
           
@@ -88,7 +88,7 @@ function Requests() {
 
     const approveRequest = async (bookId, userEmail, expectedReturnDate) => {
         try {
-            const response =  await axios.post('http://localhost:3000/book/request/approve',
+            const response =  await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/request/approve`,
              {bookId, userEmail, expectedReturnDate},
              {withCredentials:true})
           

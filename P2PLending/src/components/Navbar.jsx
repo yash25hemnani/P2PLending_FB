@@ -19,7 +19,7 @@ function Navbar() {
         // 2. Needed for authentication, especially when using JWT in cookies.
         // 3. Ensures cookies are included in API requests, enabling session persistence.
         try {
-            const response = await axios.post("http://localhost:3000/user/logout", {}, { withCredentials: true });
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/logout`, {}, { withCredentials: true });
             dispatch(clearUserData())
             dispatch(clearCurrentGroupId())
             navigate('/login')

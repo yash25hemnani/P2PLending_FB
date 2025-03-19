@@ -22,7 +22,7 @@ function GroupModal({setIsModalVisible}) {
         }
         setIsLoading(true)
         try {
-            const response = await axios.post("http://localhost:3000/group/create",
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/create`,
             {groupName: groupData.groupName, groupBio: groupData.groupBio},    
             { withCredentials: true });
 

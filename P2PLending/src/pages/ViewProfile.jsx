@@ -34,7 +34,7 @@ function ViewProfile() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                let response = await axios.post("http://localhost:3000/user/view", 
+                let response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/view`, 
                     {email: email},
                     { withCredentials: true });
                 
@@ -61,7 +61,7 @@ function ViewProfile() {
     useEffect(() => {
         const getCommonGroups = async () => {
             try {
-                let response = await axios.post("http://localhost:3000/group/get-common-groups", 
+                let response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/get-common-groups`, 
                     {requestedUser: email},
                     { withCredentials: true });
                 
@@ -82,7 +82,7 @@ function ViewProfile() {
     useEffect(() => {
         const fetchAllBooks = async () => {
             try {
-                let response = await axios.post("http://localhost:3000/book/fetch/all/viewing", 
+                let response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/fetch/all/viewing`, 
                     {bookOwner: email},
                     { withCredentials: true });
                 
@@ -105,7 +105,7 @@ function ViewProfile() {
                 setLentBooks(tempLentBookArray)
                 
                 // Getting the borrowed books
-                response = await axios.post("http://localhost:3000/book/fetch/borrowed/viewing", 
+                response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/fetch/borrowed/viewing`, 
                     {borrower: email},
                     { withCredentials: true });
                 

@@ -106,7 +106,7 @@ function UserGroups() {
 
     const saveDetailChange = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/group/update", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/update`, {
                 // Have to send group id and updated fields
                 groupId: currentGroup.groupId,
                 updatedFields: {...currentGroup}
@@ -143,7 +143,7 @@ function UserGroups() {
     const  promoteToLender = async () => {
         console.log(currentGroup.groupId)
         try {
-            const response = await axios.post("http://localhost:3000/group/promote", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/promote`, {
                 groupId: currentGroup.groupId,
             }, { withCredentials: true });
             
@@ -171,7 +171,7 @@ function UserGroups() {
     const revertToReader = async () => {
         console.log(currentGroup.groupId)
         try {
-            const response = await axios.post("http://localhost:3000/group/revert", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/revert`, {
                 groupId: currentGroup.groupId,
             }, { withCredentials: true });
             
@@ -203,7 +203,7 @@ function UserGroups() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/user/auth/check", { withCredentials: true });
+                const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/auth/check`, { withCredentials: true });
                 console.log(response.data)
                 if(!response.data.isAuthenticated) {
                     navigate('/login')
@@ -226,7 +226,7 @@ function UserGroups() {
     useEffect(() => {
       const getJoinedGroups = async () => {
         try {
-            const response =  await axios.get('http://localhost:3000/group/fetch/joined', {withCredentials:true})
+            const response =  await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/group/fetch/joined`, {withCredentials:true})
           
             setJoinedGroups(response.data.data)
         
@@ -241,7 +241,7 @@ function UserGroups() {
     useEffect(() => {
         const getNotJoinedGroups = async () => {
           try {
-              const response =  await axios.get('http://localhost:3000/group/fetch/not-joined', {withCredentials:true})
+              const response =  await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/group/fetch/not-joined`, {withCredentials:true})
             
               setNotJoinedGroups(response.data.data)
           
@@ -256,7 +256,7 @@ function UserGroups() {
     const removeMember = async (listName, groupId, removeEmail) => {
         console.log("Group Id: " + groupId)
         try {
-            const response =  await axios.post('http://localhost:3000/group/remove-member',
+            const response =  await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/remove-member`,
              {groupId, removeEmail},
              {withCredentials:true})
           

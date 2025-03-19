@@ -21,7 +21,7 @@ function Login() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/user/auth/check", { withCredentials: true });
+                const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/auth/check`, { withCredentials: true });
                 console.log(response.data)
                 if(response.data.isAuthenticated === true) {
                     navigate('/')
@@ -73,7 +73,7 @@ function Login() {
     const logInUser = async() => {
         console.log(formData.email)
         try {
-            const response = await axios.post('http://localhost:3000/user/login', {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/login`, {
                 email: formData.email,
                 password: formData.password
             },

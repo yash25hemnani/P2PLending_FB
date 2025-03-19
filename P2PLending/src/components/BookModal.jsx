@@ -24,7 +24,7 @@ function BookModal({setIsModalVisible, setListedBooks}) {
         }
         setIsLoading(true)
         try {
-            const response = await axios.post("http://localhost:3000/book/create",
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/create`,
             {bookName: bookData.bookName, bookAuthor: bookData.bookAuthor, bookCategory: bookData.bookCategory},    
             { withCredentials: true });
 

@@ -5,7 +5,7 @@ function GroupCard({onClick, groupDetails, isAdmin, showConfirm, setJoinedGroups
 
     const deleteGroup =  async (groupId) => {
         try {
-            const response = await axios.post("http://localhost:3000/group/delete",
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/group/delete`,
             {groupId: groupId},    
             { withCredentials: true });
 

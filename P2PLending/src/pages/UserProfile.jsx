@@ -39,7 +39,7 @@ function UserProfile() {
 
     const saveDetailChange = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/user/update", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/update`, {
                 // Have to send group id and updated fields
                 updatedFields: {...userDetails}
             }, { withCredentials: true });
@@ -76,7 +76,7 @@ function UserProfile() {
         console.log(selectedFile)
         
         try {
-            const response = await axios.post("http://localhost:3000/user/upload/mug/front", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/upload/mug/front`, {
                 email: userDetails.email,
                 file: selectedFile
             },{
@@ -110,7 +110,7 @@ function UserProfile() {
         console.log(selectedFile)
         
         try {
-            const response = await axios.post("http://localhost:3000/user/upload/mug/side", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/upload/mug/side`, {
                 email: userDetails.email,
                 file: selectedFile
             },{
@@ -145,7 +145,7 @@ function UserProfile() {
     useEffect(() => {
         const fetchAllBooks = async () => {
             try {
-                let response = await axios.get("http://localhost:3000/book/fetch/all", 
+                let response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/book/fetch/all`, 
                     { withCredentials: true });
                 
                 console.log(response.data)
@@ -167,7 +167,7 @@ function UserProfile() {
                 setLentBooks(tempLentBookArray)
                 
                 // Getting the borrowed books
-                response = await axios.get("http://localhost:3000/book/fetch/borrowed", 
+                response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/book/fetch/borrowed`, 
                     { withCredentials: true });
                 
                 console.log(response.data)

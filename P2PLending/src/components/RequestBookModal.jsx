@@ -21,7 +21,7 @@ function RequestBookModal({currentBook, setIsModalVisible}) {
 
     const addRequest = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/book/request", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/request`, {
                 bookId: currentBook.bookId,
                 suggestedReturnDate: date
             }, {withCredentials: true})
@@ -39,7 +39,7 @@ function RequestBookModal({currentBook, setIsModalVisible}) {
                 // Sending the Notification
                 if (response.data.status == 'passed') {
                     try {
-                        response = await axios.post("http://localhost:3000/notification/create", {
+                        response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/notification/create`, {
                             forUser: currentBook.bookOwner, 
                             message: `You have a book request from ${userData.email} for book ${currentBook.bookName}`, 
                             fromUser: userData.email

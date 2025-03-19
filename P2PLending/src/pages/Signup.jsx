@@ -19,7 +19,7 @@ function Signup() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/user/auth/check", { withCredentials: true });
+                const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/auth/check`, { withCredentials: true });
                 console.log(response.data)
                 if(response.data.isAuthenticated === true) {
                     navigate('/')
@@ -139,7 +139,7 @@ function Signup() {
 
     const checkEmailExistence = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/user/check-existence', {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/check-existence`, {
                 email: formData.email
             }, { withCredentials: true });
             
@@ -154,7 +154,7 @@ function Signup() {
 
     const signupUser = async(formData) => {
         try {
-            const response = await axios.post('http://localhost:3000/user/signup', {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/signup`, {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password

@@ -7,7 +7,7 @@ function Notifications() {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/notification/fetch", {withCredentials: true})
+                const response = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/notification/fetch`, {withCredentials: true})
         
                 console.log(response.data)
                 if(response.data.status == 'passed'){
@@ -23,7 +23,7 @@ function Notifications() {
 
     const handleDelete = async (notificationId) => {
         try {
-            const response = await axios.post("http://localhost:3000/notification/delete",{
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/notification/delete`,{
                 notificationId
             }, {withCredentials: true})
     

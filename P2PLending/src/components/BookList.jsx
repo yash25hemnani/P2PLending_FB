@@ -30,7 +30,7 @@ function BookList({loopArray, sectionNumber, setListedBooks = null, setLentBooks
 
     const deleteBook = async (bookId) => {
         try {
-            const response = await axios.post("http://localhost:3000/book/delete", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/delete`, {
                 bookId: bookId
             }, {withCredentials: true})
     
@@ -55,7 +55,7 @@ function BookList({loopArray, sectionNumber, setListedBooks = null, setLentBooks
 
     const shelveBook = async (bookId) => {
         try {
-            const response = await axios.post("http://localhost:3000/book/shelve", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/shelve`, {
                 bookId: bookId
             }, {withCredentials: true})
     
@@ -106,7 +106,7 @@ function BookList({loopArray, sectionNumber, setListedBooks = null, setLentBooks
     const handleSaveClick = async (bookId) => {
         try {
             setEditBookId('')
-            const response = await axios.post("http://localhost:3000/book/update", {
+            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/update`, {
                 // Have to send group id and updated fields
                 bookId: bookId,
                 updatedFields: {...editBookData}
