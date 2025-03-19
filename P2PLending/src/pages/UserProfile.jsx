@@ -207,7 +207,7 @@ function UserProfile() {
                 <div className="w-full h-full  flex justify-center items-center border-black border-2 rounded-md hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] bg-[#FFA6F6]">
                     <figure className="w-[280px] h-full border-black border-b-2 py-3 px-2 flex justify-center items-center">
                         <img
-                        src={import.meta.env.VITE_APP_BACKEND_URL + '/' + userDetails.urlFront}
+                        src={import.meta.env.VITE_APP_BACKEND_URL + '/' + userDetails.urlFront + '.jpg'}
                         alt="thumbnail"
                         className="w-[95%] h-full object-cover rounded-md border-2 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] "
                         />
@@ -217,7 +217,7 @@ function UserProfile() {
                 <div className="w-full h-full  flex justify-center items-center border-black border-2 rounded-md hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] bg-[#FFA6F6]">
                     <figure className="w-[280px]  h-full border-black border-b-2 py-3 px-2 flex justify-center items-center">
                         <img
-                        src={import.meta.env.VITE_APP_BACKEND_URL + '/' + userDetails.urlSide}
+                        src={import.meta.env.VITE_APP_BACKEND_URL + '/' + userDetails.urlSide + '.jpg'}
                         alt="thumbnail"
                         className="w-[95%] h-full object-cover rounded-md border-2 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] "
                         />
