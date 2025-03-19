@@ -21,7 +21,7 @@ function RequestBookModal({currentBook, setIsModalVisible}) {
 
     const addRequest = async () => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/request`, {
+            let response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/book/request`, {
                 bookId: currentBook.bookId,
                 suggestedReturnDate: date
             }, {withCredentials: true})
