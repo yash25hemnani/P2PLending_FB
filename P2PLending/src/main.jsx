@@ -14,6 +14,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./app/store.js"
 import ViewProfile from './pages/ViewProfile.jsx'
 import Requests from './pages/Requests.jsx'
+import Notifications from './pages/Notifications.jsx'
 
 
 const router = createBrowserRouter(
@@ -26,6 +27,8 @@ const router = createBrowserRouter(
       <Route path='user/view/:email' element={<ViewProfile />} />
       <Route path='user/groups' element={<UserGroups />} />
       <Route path='requests' element={<Requests />} />
+      <Route path='requests' element={<Requests />} />
+      <Route path='notifications' element={<Notifications />} />
     </Route>
 
     <Route path='/signup' element={<Signup />} />

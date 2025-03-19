@@ -35,6 +35,7 @@ function UserGroups() {
     })
     const userData = useSelector((state) => state.user.userData)
     const dispatch = useDispatch()
+    const [query, setQuery] = useState('')
 
     const {alert, showAlert, hideAlert} = useAlert()
 
@@ -253,6 +254,7 @@ function UserGroups() {
       }, [])
 
     const removeMember = async (listName, groupId, removeEmail) => {
+        console.log("Group Id: " + groupId)
         try {
             const response =  await axios.post('http://localhost:3000/group/remove-member',
              {groupId, removeEmail},
@@ -280,6 +282,10 @@ function UserGroups() {
         navigate('/')
     }
 
+    const handleSearch = (event) => {
+        setQuery(event.target.value)
+    }
+
 
   return (
     <section className='w-full lg:h-[99vh] lg:w-3/4 px-3 flex flex-col gap-2 lg:flex-row '>
@@ -291,10 +297,12 @@ function UserGroups() {
 
         </div>
         <div className='flex flex-col gap-2 lg:w-3/6 lg:h-5/6'>
-            <div className="flex flex-col gap-2 w-full h-auto overflow-y-auto border-black border-2 rounded-md hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] bg-[#FFA6F6] p-3">
+            <div className={`flex ${showDetails ? 'not-lg:hidden':''} flex-col gap-2 w-full h-auto overflow-y-auto border-black border-2 rounded-md hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] bg-[#FFA6F6] p-3`}>
                 <input class=
-                    "w-full bg-white border-black border-2 p-2.5 focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-[#FFA6F6] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] rounded-full"
-                    placeholder="you@example.com"
+                    "w-full bg-white border-black border-2 p-2.5 focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] rounded-full"
+                    placeholder="Search Something"
+                    onInput={handleSearch}
+                    value={query}
                 />
 
                 {showJoined && (<div className="px-6 py-5 text-left h-full border-2 rounded-md bg-yellow-200 flex flex-col gap-2 overflow-y-auto">
@@ -312,7 +320,11 @@ function UserGroups() {
                     {/* Book List */}
                     
                     {joinedGroups.length === 0 ? 'No Groups Joined!' : (
-                        joinedGroups.map((group, index) => (
+                        joinedGroups
+                        .filter((group) =>
+                            group.groupName.toLowerCase().includes(query.toLowerCase())
+                        )
+                        .map((group, index) => (
                             // Define the Delete and Edit here
                             <GroupCard 
                                 onClick={() => handleGroupClick(group._id)} 
@@ -344,7 +356,11 @@ function UserGroups() {
                     {/* Book List */}
                     
                     {notJoinedGroups.length === 0 ? 'No Groups Joined!' : (
-                        notJoinedGroups.map((group, index) => (
+                        notJoinedGroups
+                        .filter((group) =>
+                            group.groupName.toLowerCase().includes(query.toLowerCase())
+                        )
+                        .map((group, index) => (
                             // Define the Delete and Edit here
                             <GroupCard 
                                 onClick={() => handleGroupClick(group._id)} 
@@ -366,10 +382,10 @@ function UserGroups() {
             </div>
         </div>
 
-        <div className='hidden lg:block lg:w-3/6 lg:h-5/6'>
+        <div className={`${showDetails ? 'block':'hidden'} lg:block lg:w-3/6 lg:h-5/6`}>
             <div className='mb-4 h-full'>
                 {showDetails && (<div className="px-6 py-5 text-left h-full border-2 rounded-md bg-yellow-200 flex flex-col gap-2 overflow-auto">
-                    <div className='flex justify-between items-cente overflow-x-autor'>
+                    <div className='flex justify-between items-cente overflow-x-autor flex-wrap'>
                         <h1 className="text-[32px] mb-1">Group Details</h1>
                         <div className='flex gap-2'>
                             {currentGroup?.createdBy?.email === userData?.email && (<button class="border-black border-2 rounded-full bg-[#FFA6F6] hover:bg-[#fa8cef] active:bg-[#f774ea] w-8 h-8 flex justify-center items-center cursor-pointer">
@@ -459,17 +475,14 @@ function UserGroups() {
                             currentGroup.lenders.length === 0 ? (<div className='bg-white border-2 rounded-md p-3'>
                                 No Lenders Yet!
                             </div>) : (currentGroup.lenders.map((email) => (
-                                <div key={email} className='bg-white flex justify-between items-center border-2 rounded-md p-3'>
-                                <div className='font-semibold text-md flex gap-2'>
-                                    <h1 className='cursor-pointer hover:underline' onClick={() => email === userData.email ? navigate(`/user/profile`) : navigate(`/user/view/${email}`)}>
-                                        {email}
+                                <div key={email} className='bg-white flex justify-between items-center border-2 rounded-md p-3 flex-wrap'>
+                                <div className='font-semibold text-md flex gap-2 flex-wrap'>
+                                    <h1 className='cursor-pointer hover:underline text-wrap' onClick={() => email === userData.email ? navigate(`/user/profile`) : navigate(`/user/view/${email}`)}>
+                                        {email} {email === currentGroup.createdBy.email ? '(admin)' : ''}
                                     </h1>
-                                    <h2>
-                                        {email === currentGroup.createdBy.email ? '(admin)' : ''}
-                                    </h2>
                                 </div>
                                 <div className='flex gap-2'>
-                                    {currentGroup.createdBy.email === userData.email ? 
+                                    {currentGroup.createdBy.email === userData.email && email !== userData.email ? 
                                     (<button onClick={() => showConfirm("Are you sure you want to remove?", () => removeMember("lenders", currentGroup.groupId, email))} className="border-black border-2 rounded-full bg-[#FFA6F6] hover:bg-[#fa8cef] active:bg-[#f774ea] w-8 h-8 flex justify-center items-center ">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg>
                                     </button>)
@@ -483,7 +496,7 @@ function UserGroups() {
                         Readers
                         { 
                             currentGroup.readers.length === 0 ? (<div className='bg-white border-2 rounded-md p-3'>
-                                No Lenders Yet!
+                                No Readers Yet!
                             </div>) : (currentGroup.readers.map((email) => (
                                 <div key={email} className='bg-white flex justify-between items-center border-2 rounded-md p-3'>
                                 <div className='font-semibold text-md flex gap-2'>

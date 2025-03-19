@@ -11,7 +11,7 @@
 
     // Get the rotation of each library element
     function LibraryGallery({NUM_ELEMENTS, radius, galleryPosition, galleryScale, galleryRotation, isRotating, setIsRotating, cameraPositionZ, setCurrentUser}) {
-          
+        
 
         const groupRef = useRef();
         const [index, setIndex] = useState(0)
@@ -35,6 +35,12 @@
             e.preventDefault();
             setIsRotating(false);
         }
+
+        useEffect(() => {
+          groupRef.current.rotation.y = galleryRotation[1]
+          // console.log(galleryRotation[1])
+        }, [galleryRotation])
+        
 
         const handlePointerMove = (e) => {
             e.stopPropagation();

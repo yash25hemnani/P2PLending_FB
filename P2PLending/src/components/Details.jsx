@@ -3,6 +3,7 @@ import { groupBy } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import BookList from './BookList'
+import { useSelector } from 'react-redux'
 
 const DetailBox = ({name, handleLoadClick, bookOwner, description, isLoadingBooks, booksLentByEach}) => {
   
@@ -34,11 +35,11 @@ const DetailBox = ({name, handleLoadClick, bookOwner, description, isLoadingBook
 }
 
 
-function Details({currentGroupId, currentUser, setCurrentGroupName, setNumElements}) {
-  const [lendersList, setLendersList] = useState([])
+function Details({currentGroupId, lendersList, setLendersList, currentUser, setCurrentUser, setGalleryRotation, setCurrentGroupName, setNumElements}) {
   const [listedBooks, setListedBooks] = useState([])
   const [isLoadingBooks, setIsLoadingBooks] = useState(false)
   const [emailToLoad, setEmailToLoad] = useState('')
+  const userData = useSelector((state) => state.user.userData)
 
   const loadBooks = async () => {
     try {
@@ -94,9 +95,21 @@ function Details({currentGroupId, currentUser, setCurrentGroupName, setNumElemen
             // Set the current group name
             setCurrentGroupName(response.data.data.groupName)
             const members = response.data.data.members; //Fetch the memebers
-            setNumElements(members.length)
             const lenders = members.filter((member) => member.role === 'lender' ||  member.role === 'admin') // Filter the lenders
+            setNumElements(lenders.length)
             setLendersList(lenders)
+
+            // If the logged in user is a lender, we need to get it's index to set rotation
+            const indexOfUser = lenders.findIndex((lender) => lender.userEmail === userData.email)
+            if (indexOfUser !== -1){
+              console.log(indexOfUser)
+              // lenders.length == the number of elments
+              setCurrentUser(indexOfUser)
+              console.log("Rotation => ", (indexOfUser/(lenders.length))*2*Math.PI)
+              setGalleryRotation([0, (indexOfUser/(lenders.length))*2 *Math.PI, 0])
+
+            }
+
             console.log(lenders)
           }
       } catch (error) {
@@ -106,7 +119,8 @@ function Details({currentGroupId, currentUser, setCurrentGroupName, setNumElemen
 
       fetchLenders()
     }, [])
-
+    
+  
     
 
     

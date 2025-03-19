@@ -4,12 +4,14 @@ import Alert from './Alert'
 import useAlert from '../hooks/useAlert'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-function RequestBookModal({bookId, setIsModalVisible}) {
+function RequestBookModal({currentBook, setIsModalVisible}) {
     const {alert, showAlert, hideAlert} = useAlert()
     const [isLoading, setIsLoading] = useState(false)
     const [date, setDate] = useState('')
     const location = useLocation()
+    const userData = useSelector((state) => state.user.userData)
 
     const handleDateChange = (event) => {
         let date = new Date(event.target.value)
@@ -18,10 +20,9 @@ function RequestBookModal({bookId, setIsModalVisible}) {
     }
 
     const addRequest = async () => {
-        console.log(bookId)
         try {
             const response = await axios.post("http://localhost:3000/book/request", {
-                bookId: bookId,
+                bookId: currentBook.bookId,
                 suggestedReturnDate: date
             }, {withCredentials: true})
     
@@ -32,15 +33,29 @@ function RequestBookModal({bookId, setIsModalVisible}) {
                 setTimeout(() => {
                     hideAlert()
                     setIsModalVisible(false)
+                    window.location.reload()
                 }, 3000);
+
+                // Sending the Notification
+                if (response.data.status == 'passed') {
+                    try {
+                        response = await axios.post("http://localhost:3000/notification/create", {
+                            forUser: currentBook.bookOwner, 
+                            message: `You have a book request from ${userData.email} for book ${currentBook.bookName}`, 
+                            fromUser: userData.email
+                        }, {withCredentials: true})
+
+                        console.log(response)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
 
             }
         } catch (error) {
             console.log(error)
         }
     }
-
-
     
 
   return (

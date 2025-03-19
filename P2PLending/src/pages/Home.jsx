@@ -19,12 +19,13 @@ function Home() {
     const cameraPositionZ = (radius * radius/6)
 
     const [isRotating, setIsRotating] = useState(false)
-    const [currentUser, setCurrentUser] = useState(0)
+    const [currentUser, setCurrentUser] = useState(null)
     const [currentGroupName, setCurrentGroupName] = useState('')
 
     const currentGroupId = useSelector((state) => state.user.currentGroupId)
     const {alert, showAlert, hideAlert} = useAlert()
     const navigate = useNavigate()
+
 
     useEffect(() => {
       if(!currentGroupId){
@@ -36,18 +37,18 @@ function Home() {
     }, [currentGroupId])
     
 
-    const [lendersList, setlendersList] = useState([])
+    const [lendersList, setLendersList] = useState([])
 
     useEffect(() => {
       console.log(currentUser)
     }, [currentUser])
     
-
+    const [galleryRotation, setGalleryRotation] = useState([0, -0.04, 0])
     // Creating the adjust size function and thus change position of camera as well
     const adjustLibraryGalleryForScreenSize = () => {
         let screenScale = null;
         let screenPosition = [-1, -5.7, -30];
-        let rotation = [0, -0.04, 0]
+        // let rotation = [0, -0.04, 0]
 
         if(window.innerWidth < 768) {
             screenScale = [1,1,1];
@@ -55,10 +56,10 @@ function Home() {
             screenScale = [1.15,1.15,1.15];
         }
 
-        return [screenScale, screenPosition, rotation]
+        return [screenScale, screenPosition]
     }
 
-    const [galleryScale, galleryPosition, galleryRotation] = adjustLibraryGalleryForScreenSize() 
+    const [galleryScale, galleryPosition] = adjustLibraryGalleryForScreenSize() 
 
     const adjustCatForScreenSize = () => {
         let screenScale = null;
@@ -81,8 +82,8 @@ function Home() {
 
     <section className='w-full h-screen relative'>
         {alert.show && (<Alert {...alert}/>)}
-        <div className='absolute lg:top-44 top-48 left-1/2 z-1 lg:w-1/4 md:w-1/2 w-3/4 transform -translate-x-1/2 -translate-y-2/5 h-auto max-h-[500px]'>
-            <Details currentGroupId={currentGroupId} currentUser={currentUser} setCurrentGroupName={setCurrentGroupName} setNumElements={setNumElements}/>
+        <div className='absolute lg:top-44 top-48 left-1/2 z-1 lg:w-3/10 md:w-1/2 w-9/10 transform -translate-x-1/2 -translate-y-2/5 h-auto max-h-[500px]'>
+            <Details currentGroupId={currentGroupId} lendersList={lendersList} setLendersList={setLendersList} currentUser={currentUser} setCurrentUser={setCurrentUser} setGalleryRotation={setGalleryRotation} setCurrentGroupName={setCurrentGroupName} setNumElements={setNumElements}/>
         </div>
         {/* Setting up the canvas, with the camera */}
         <Canvas 
@@ -128,7 +129,7 @@ function Home() {
             </Suspense>
         </Canvas>
         <div className='absolute z-10 bottom-4 left-1/2 transform -translate-x-1/2'>
-            <SearchBar currentGroupName={currentGroupName}/>
+            <SearchBar currentGroupName={currentGroupName} lendersList={lendersList} setCurrentUser={setCurrentUser} setGalleryRotation={setGalleryRotation} />
         </div>
     </section>
   )

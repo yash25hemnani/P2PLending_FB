@@ -35,6 +35,7 @@ function UserProfile() {
     const handleChange = (event) => {
         setUserDetails({...userDetails, [event.target.name]:event.target.value})
     }
+    
 
     const saveDetailChange = async () => {
         try {

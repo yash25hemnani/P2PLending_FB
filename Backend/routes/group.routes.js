@@ -150,18 +150,18 @@ router.get('/fetch/joined', authMiddleware, async (req, res) => {
     }
 })
 
-router.post('/remover-member', authMiddleware, async (req, res) => {
+router.post('/remove-member', authMiddleware, async (req, res) => {
     try {
         const {groupId, removeEmail} = req.body;
         const groupIdObject = new mongoose.Types.ObjectId(groupId);
-        
+        console.log(groupIdObject)
         console.log(removeEmail)
 
         const removeMember = await groupModel.findOneAndUpdate(
-            {groupIdObject},
+            { _id: groupIdObject } ,
             { $pull: { members: { userEmail: removeEmail } } }, 
+            { new: true }
         )
-    
     
         if (!removeMember) {
             return res.status(200).json({
@@ -170,7 +170,7 @@ router.post('/remover-member', authMiddleware, async (req, res) => {
                 message: "Removal Failed!",
             })
         }
-
+        console.log(removeMember)
         res.status(200).json({
             status: 'passed',
             type: 'success',

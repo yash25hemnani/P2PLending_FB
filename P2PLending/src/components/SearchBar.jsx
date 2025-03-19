@@ -1,7 +1,23 @@
 import React, { useState } from 'react'
 
-function SearchBar({currentGroupName = ''}) {
+function SearchBar({currentGroupName = '', lendersList, setCurrentUser, setGalleryRotation}) {
     const [clicked, setClicked] = useState(false)
+    const [query, setQuery] = useState('')
+
+    const handleSearch = (event) => {
+        setQuery(event.target.value)
+
+        const indexOfUser = lendersList.findIndex((lender) =>
+            lender.userEmail.toLowerCase().includes(event.target.value.toLowerCase())
+        )
+
+        
+        setCurrentUser(indexOfUser)
+        console.log((indexOfUser/(lendersList.length))*2 *Math.PI)
+        setGalleryRotation([0, (indexOfUser/(lendersList.length))*2 *Math.PI, 0])
+
+
+    }
 
   return ( //bg-[#ad33ef]
     <div className='flex justify-center items-center gap-2 bg-[#efd933] py-1 px-2 border-2 rounded-4xl hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] min-w-0 '>
@@ -12,7 +28,9 @@ function SearchBar({currentGroupName = ''}) {
             <div className="h-full border-black rounded-md ">
                 <input className=
                     "lg:w-96 md:w-96 border-black border-2 p-2.5 pl-5 focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] bg-white active:shadow-[2px_2px_0px_rgba(0,0,0,1)] rounded-full"
-                    placeholder="you@example.com"
+                    placeholder="Search Something"
+                    value={query}
+                    onInput={handleSearch}
                 />
             </div>
         )}

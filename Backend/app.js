@@ -19,6 +19,7 @@ const morgan = require('morgan')
 const userRouter = require('./routes/user.routes')
 const groupRouter = require('./routes/group.routes')
 const bookRouter = require('./routes/book.routes')
+const notificationRouter = require('./routes/notification.routes')
 
 const connectToDB = require('./config/db')
 connectToDB()
@@ -38,6 +39,7 @@ app.get('/', (req, res) => {
 app.use('/user', userRouter)
 app.use('/group', groupRouter)
 app.use('/book', bookRouter)
+app.use('/notification', notificationRouter)
 
 const port = process.env.PORT || 3000
 

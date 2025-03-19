@@ -287,7 +287,8 @@ router.post('/request', authMiddleware, async (req, res) => {
 
         const addBookRequest = await bookModel.findByIdAndUpdate(
             bookIdObject,  
-            { $push: { requests: newRequest } },  // Second argument: Update operation
+            { $push: { "requests": newRequest } },  // Second argument: Update operation
+            { new: true }
         )
 
         console.log(addBookRequest)
@@ -299,8 +300,6 @@ router.post('/request', authMiddleware, async (req, res) => {
                 message: "Requested Successfully!"
             }) 
         }
-    
-
     } catch (error) {
         console.log(error)
         res.status(500).json({

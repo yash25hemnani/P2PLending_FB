@@ -3,7 +3,7 @@ import React from 'react'
 function Confirm({text, setChoice}) {
   return (
     <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-300 border-2 rounded-md p-4 flex flex-col gap-2 '>
-        <h1 className='text-xl font-semibold '>Delete Group</h1>
+        <h1 className='text-xl font-semibold '>Delete Confirmation</h1>
         <h2 className='font-bold'>{text}</h2>
         
         <div className='flex gap-2'>

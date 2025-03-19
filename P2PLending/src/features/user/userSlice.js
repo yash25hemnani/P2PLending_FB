@@ -18,12 +18,15 @@ export const userSlice = createSlice({
         },
         setCurrentGroupId: (state, action) => {
             state.currentGroupId = action.payload
+        },
+        clearCurrentGroupId: (state, action) => {
+            state.currentGroupId = null
         }
     }
 })
 
 // Export actions
-export const {setUserData, clearUserData, setCurrentGroupId} = userSlice.actions
+export const {setUserData, clearUserData, setCurrentGroupId, clearCurrentGroupId} = userSlice.actions
 
 // Export Reducer
 export default userSlice.reducer

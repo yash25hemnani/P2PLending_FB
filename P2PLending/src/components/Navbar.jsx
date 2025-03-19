@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearUserData } from '../features/user/userSlice'
+import { clearUserData, clearCurrentGroupId } from '../features/user/userSlice'
 
 function Navbar() {
     const [isAbsolute, setIsAbsolute] = useState(false)
@@ -21,6 +21,7 @@ function Navbar() {
         try {
             const response = await axios.post("http://localhost:3000/user/logout", {}, { withCredentials: true });
             dispatch(clearUserData())
+            dispatch(clearCurrentGroupId())
             navigate('/login')
         } catch (error) {
             console.log(error);
@@ -54,9 +55,9 @@ function Navbar() {
         <nav className={`absolute lg:static top-16 right-2 md:w-1/3 w-1/2 h-auto lg:w-auto rounded-md bg-yellow-200 border-2 lg:p-2 p-5 transition-all duration-300 ease-in-out hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] ${isOpen ? 'flex' : 'hidden'} flex-col lg:flex-row lg:flex gap-3 font-medium`}>
                 
 
-            {/* <NavLink to="/help" className={`${({isActive}) => isActive ? 'text-yellow-400' : 'text-yellow-200'} bg-white border-2 rounded-md lg:p-1  lg:px-2 p-2 hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] `}>
+            <NavLink to="/notifications" className={`${({isActive}) => isActive ? 'text-yellow-400' : 'text-yellow-200'} bg-white border-2 rounded-md lg:p-1  lg:px-2 p-2 hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] `}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z"/></svg>
-            </NavLink> */}
+            </NavLink>
             <NavLink to="/requests" className={`${({isActive}) => isActive ? 'text-yellow-400' : 'text-yellow-200'} bg-white border-2 rounded-md lg:p-1  lg:px-2 p-2 hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] `}>
                 Requests
             </NavLink>
