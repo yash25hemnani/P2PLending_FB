@@ -10,7 +10,8 @@ app.use(cookieParser());
 const cors = require('cors');
 app.use(
   cors({
-    origin: "https://p2p-lending-frontend.onrender.com", 
+    // origin: "https://p2p-lending-frontend.onrender.com", 
+    origin: "http://localhost:5173  ", 
     credentials: true, 
   })
 );

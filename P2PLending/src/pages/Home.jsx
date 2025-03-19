@@ -18,6 +18,12 @@ function Home() {
     const radius = baseRadius + numElements * 0.6; 
     const cameraPositionZ = (radius * radius/6)
 
+    useEffect(() => {
+      console.log("Num " + numElements)
+      console.log("Radius " + radius)
+    }, [numElements])
+    
+
     const [isRotating, setIsRotating] = useState(false)
     const [currentUser, setCurrentUser] = useState(null)
     const [currentGroupName, setCurrentGroupName] = useState('')
