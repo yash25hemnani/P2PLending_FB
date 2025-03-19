@@ -92,10 +92,13 @@ router.post('/signup', async (req, res) => {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",  // Only secure in production
-            sameSite: "lax",  // Helps with cross-site requests
-            maxAge: 24 * 60 * 60 * 1000
+            secure: process.env.NODE_ENV === "production", 
+            sameSite: "none", 
+            maxAge: 24 * 60 * 60 * 1000, 
+            path: "/",
         });
+
+
 
         res.status(201).json({
             status: 'passed',
@@ -206,12 +209,14 @@ router.post('/login', async (req, res) => {
             expiresIn: "24h",
         });
 
-        res.cookie("token", token, {
+         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",  // Only secure in production
-            sameSite: "lax",  // Helps with cross-site requests
-            maxAge: 24 * 60 * 60 * 1000
+            secure: process.env.NODE_ENV === "production", 
+            sameSite: "none", 
+            maxAge: 24 * 60 * 60 * 1000, 
+            path: "/",
         });
+
 
         console.log(token)
 
@@ -270,7 +275,7 @@ router.post("/logout", (req, res) => {
     res.clearCookie("token", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",  // Secure only in production
-        sameSite: "lax" // Helps with cross-origin cookies
+        sameSite: "none" // Helps with cross-origin cookies
     });
 
     return res.json({ 

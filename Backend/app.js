@@ -9,10 +9,10 @@ app.use(cookieParser());
 
 const cors = require('cors');
 app.use(
-    cors({
-        origin: "http://localhost:5173", 
-        credentials: true,  
-    })
+  cors({
+    origin: "https://p2p-lending-frontend.onrender.com", 
+    credentials: true, 
+  })
 );
 
 const morgan = require('morgan')
