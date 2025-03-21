@@ -152,7 +152,7 @@ function UserGroups() {
                 const removeFromReader = currentGroup.readers.filter((item) => item != userData.email)
                 setCurrentGroup({
                     ...currentGroup,
-                    "isLender": false,
+                    "isLender": true,
                     "readers": removeFromReader,
                     "lenders": [...currentGroup.lenders, userData.email]
                 })
