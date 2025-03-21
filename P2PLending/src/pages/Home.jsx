@@ -73,6 +73,7 @@ function Home() {
         let screenScale = null;
         let catPositionZ = cameraPositionZ - 10;
         let screenPosition = [0, -5.5, catPositionZ];
+        console.log(catPositionZ)
         let rotation = [0, Math.PI/2, 0]
 
         if(window.innerWidth < 768) {
@@ -85,6 +86,8 @@ function Home() {
     }
 
     const [catScale, catPosition, catRotation] = adjustCatForScreenSize() 
+
+    
 
   return (
 
