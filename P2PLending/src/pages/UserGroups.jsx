@@ -330,7 +330,7 @@ function UserGroups() {
                                 onClick={() => handleGroupClick(group._id)} 
                                 key={group._id} 
                                 groupDetails={group}  
-                                isAdmin={group.createdBy.email === userData.email} 
+                                isAdmin={group.createdBy.email === userData?.email} 
                                 showConfirm={showConfirm} 
                                 setJoinedGroups={setJoinedGroups}
                                 showAlert={showAlert}

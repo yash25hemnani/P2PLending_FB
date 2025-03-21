@@ -11,7 +11,7 @@ function Navbar() {
     const dispatch = useDispatch()
     const [numberOfRequests, setNumberOfRequests] = useState(0)
     const userData = useSelector((state) => state.user.userData)
-    
+
 
     const logoutUser = async() => {
         // Why Do You Need withCredentials: true?
@@ -40,7 +40,7 @@ function Navbar() {
     <header className={`${isAbsolute ? 'absolute' : ''} z-10 w-full lg:w-3/4 p-3 bg-transparent flex justify-between items-center`}>
         <div className='flex gap-2'>
             <NavLink to="/" className="w-auto h-10 p-2 rounded-md bg-white items-center justify-center flex font-bold  border-black border-2 shadow-white hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] ">
-                <p className='text-yellow-500'>{userData.username}</p>
+                <p className='text-yellow-500'>{userData?.username ?? ''}</p>
             </NavLink>
         </div>
 

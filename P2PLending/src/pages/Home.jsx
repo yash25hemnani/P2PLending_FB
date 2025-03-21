@@ -13,6 +13,7 @@ import Alert from '../components/Alert';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
+
     const [numElements, setNumElements] = useState(0)
     const baseRadius = 5;
     const radius = baseRadius + numElements * 0.6; 
@@ -31,6 +32,7 @@ function Home() {
     const currentGroupId = useSelector((state) => state.user.currentGroupId)
     const {alert, showAlert, hideAlert} = useAlert()
     const navigate = useNavigate()
+
 
 
     useEffect(() => {

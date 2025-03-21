@@ -92,8 +92,8 @@ router.post('/signup', async (req, res) => {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", 
-            sameSite: "none", 
+            secure: process.env.NODE_ENV === "production" ? true : false,
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 24 * 60 * 60 * 1000, 
             path: "/",
         });
@@ -211,12 +211,11 @@ router.post('/login', async (req, res) => {
 
          res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", 
-            sameSite: "none", 
+            secure: process.env.NODE_ENV === "production" ? true : false,
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
             maxAge: 24 * 60 * 60 * 1000, 
             path: "/",
         });
-
 
         console.log(token)
 
@@ -274,10 +273,10 @@ router.post('/update', authMiddleware, async (req, res) => {
 router.post("/logout", (req, res) => {
     res.clearCookie("token", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",  // Secure only in production
-        sameSite: "none" // Helps with cross-origin cookies
+        secure: process.env.NODE_ENV === "production" ? true : false,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
     });
-
+    
     return res.json({ 
         message: "Logged out successfully", 
         isAuthenticated: false 
